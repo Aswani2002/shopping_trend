@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Trendora Register</title>
+  <link rel="stylesheet" href="{% static 'assets/css/register.css' %}">
+</head>
+<body>
+  <div class="register-wrapper">
+    <div class="register-left">
+      <h1>Welcome to Trendora</h1>
+      <p>Discover the future of shopping. Register to create your account and explore exclusive experiences.</p>
+    </div>
+
+    <div class="register-right">
+      <h2>Create Your Account</h2>
+      <form method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" placeholder="Enter your username" required>
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email</label>
+          <input type="email" id="email" name="email" placeholder="Enter your email" required>
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number</label>
+          <input type="tel" id="phone" name="phone" placeholder="Enter your phone number" pattern="[0-9]{10}" required>
+        </div>
+
+        <div class="form-group">
+          <label for="dob">Date of Birth</label>
+          <input type="date" id="dob" name="dob" required>
+        </div>
+
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" placeholder="Create a password" required>
+        </div>
+
+        <div class="form-group">
+          <label for="confirm_password">Confirm Password</label>
+          <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm your password" required>
+        </div>
+
+        <button type="submit" class="register-btn">Register</button>
+
+        <div class="bottom-text">
+          <p>Already have an account? <a href="{% url 'login' %}">Login here</a></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</body>
+</html>

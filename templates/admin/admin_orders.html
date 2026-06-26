@@ -1,0 +1,70 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin | Orders</title>
+
+    <link rel="stylesheet" href="{% static 'assets/css/admin_orders.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h2>TRENDORA ADMIN</h2>
+
+</header>
+
+<section class="orders-container">
+
+    <h2>Customer Orders</h2>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Customer Name</th>
+                <th>Product Name</th>
+                <th>Qty</th>
+                <th>Price</th>
+                <th>Total</th>
+                <th>Payment Status</th>
+                <th>Order Date</th>
+                <th>Address</th>
+                <th>Phone</th>
+            </tr>
+        </thead>
+
+        <tbody>
+        {% for o in orders %}
+            <tr>
+                <td>{{ o.old_customer_name }}</td>
+                <td>{{ o.product_name }}</td>
+                <td>{{ o.quantity }}</td>
+                <td>₹{{ o.price }}</td>
+                <td>₹{{ o.total }}</td>
+
+                <td>
+                    {% if o.payment_status == "Success" %}
+                        <span class="paid">Paid</span>
+                    {% else %}
+                        <span class="pending">Pending</span>
+                    {% endif %}
+                </td>
+
+                <td>{{ o.order_date|date:"d M Y, h:i A" }}</td>
+                <td>{{ o.address }}</td>
+                <td>{{ o.phone }}</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+
+    </table>
+
+</section>
+
+<footer>
+    © 2025 Trendora. Admin Panel.
+</footer>
+
+</body>
+</html>

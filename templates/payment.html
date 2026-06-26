@@ -1,0 +1,198 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payment | Trendora</title>
+  <link rel="stylesheet" href="{% static 'assets/css/payment.css' %}">
+</head>
+<body>
+
+  <header>
+    <div class="logo">TRENDORA</div>
+    <div>
+      <a href="{% url 'index' %}" class="btn" style="background:#fff;color:#01244b;border:2px solid #01244b;">Back to Shop</a>
+    </div>
+  </header>
+
+
+
+  <section class="payment-container">
+       <!-- 🔵 NEW ADDRESS SECTION -->
+
+<section class="address-section">
+
+    <h2>Delivery Address</h2>
+
+    <form method="POST" id="paymentForm">
+        {% csrf_token %}
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Full Name <span style="color:red;">*</span></label>
+                <input type="text" name="full_name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Phone Number <span style="color:red;">*</span></label>
+                <input type="tel" name="phone" placeholder="Enter your mobile number" pattern="[0-9]{10}" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Email <span style="color:red;">*</span></label>
+                <input type="email" name="email" placeholder="Enter your email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Pincode <span style="color:red;">*</span></label>
+                <input type="number" name="pincode" placeholder="Enter pincode" required>
+            </div>
+        </div>
+
+        <div class="form-group full">
+            <label>Full Address <span style="color:red;">*</span></label>
+            <textarea name="address" placeholder="House No, Street, Locality" required></textarea>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>City <span style="color:red;">*</span></label>
+                <input type="text" name="city" placeholder="City" required>
+            </div>
+
+            <div class="form-group">
+                <label>State <span style="color:red;">*</span></label>
+                <input type="text" name="state" placeholder="State" required>
+            </div>
+        </div>
+
+        <div class="form-row">
+            <div class="form-group">
+                <label>Quantity <span style="color:red;">*</span></label>
+                <input type="number" name="quantity" placeholder="Quantity" value="1" min="1" required>
+            </div>
+        </div>
+
+        <button type="button" class="btn primary large" onclick="showPaymentFields()">Save Address & Continue</button>
+
+</section>
+
+    <!-- Payment Form -->
+    <div class="payment-form" id="paymentFields" style="display: none;">
+      <h2>Payment Details</h2>
+
+      <div>
+          <label>Card Number <span style="color:red;">*</span></label>
+          <input type="text" name="card_number" maxlength="16" placeholder="1234 5678 9012 3456" pattern="[0-9]{16}" required>
+        </div>
+
+        <div style="display:flex; gap:10px;">
+            <div style="flex:1;">
+              <label>Bank Name <span style="color:red;">*</span></label>
+              <select name="bank_name" required>
+                <option value="" disabled selected>Select your bank</option>
+                <option value="hdfc">HDFC Bank</option>
+                <option value="sbi">State Bank of India</option>
+                <option value="icici">ICICI Bank</option>
+                <option value="axis">Axis Bank</option>
+                <option value="kotak">Kotak Mahindra Bank</option>
+                <option value="yes">Yes Bank</option>
+                <option value="pnb">Punjab National Bank</option>
+                <option value="indusind">IndusInd Bank</option>
+                <option value="bob">Bank of Baroda</option>
+                <option value="other">Other / Netbanking</option>
+              </select>
+            </div>
+          <div style="flex:1;">
+            <label>CVV <span style="color:red;">*</span></label>
+            <input type="password" name="cvv" maxlength="3" placeholder="123" pattern="[0-9]{3}" required>
+          </div>
+        </div>
+
+        <div>
+          <label>Billing Address <span style="color:red;">*</span></label>
+          <input type="text" name="billing_address" placeholder="123 Fashion Street, NY" required>
+        </div>
+
+        <button type="button" class="btn primary large" onclick="processPayment(event)">Proceed to Pay</button>
+    </div>
+
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <h3>Order Summary</h3>
+
+      <div class="summary-item">
+        <span><strong>{{ Product.name }}</strong></span>
+        <span>₹{{ Product.price }}</span>
+      </div>
+
+      {% if Product.description %}
+      <div class="summary-item">
+        <span>Description</span>
+        <span>{{ Product.description }}</span>
+      </div>
+      {% endif %}
+
+      <div class="summary-item">
+        <span>Delivery</span>
+        <span>Free</span>
+      </div>
+      <div class="summary-total">
+        <span>Total</span>
+        <span>₹{{ Product.price }}</span>
+      </div>
+    </div>
+
+  </section>
+
+  <footer>
+    <p>© 2025 Trendora. Premium Fashion. Secure Payment. Confidence Delivered.</p>
+  </footer>
+
+  <script>
+  function showPaymentFields() {
+      const form = document.getElementById('paymentForm');
+      const addressFields = ['full_name', 'phone', 'email', 'pincode', 'address', 'city', 'state', 'quantity'];
+      let isValid = true;
+      
+      addressFields.forEach(fieldName => {
+          const input = form.querySelector(`[name="${fieldName}"]`);
+          if (input && !input.checkValidity()) {
+              isValid = false;
+          }
+      });
+      
+      if (isValid) {
+          document.getElementById('paymentFields').style.display = 'block';
+          document.querySelector('button[type="button"]').style.display = 'none';
+          // Scroll to payment form
+          document.getElementById('paymentFields').scrollIntoView({ behavior: 'smooth', block: 'center' });
+      } else {
+          alert('Please fill all required address fields correctly.');
+      }
+  }
+
+  function processPayment(event) {
+      event.preventDefault();
+      const cardNumber = document.querySelector('input[name="card_number"]').value;
+      const bankName = document.querySelector('select[name="bank_name"]').value;
+      const cvv = document.querySelector('input[name="cvv"]').value;
+      const billingAddress = document.querySelector('input[name="billing_address"]').value;
+      
+      if (!cardNumber || !bankName || !cvv || !billingAddress) {
+          alert('Please fill all payment details.');
+          return;
+      }
+      
+      // Show success message and submit form
+      alert("🎉 Payment Successful!\nYour order has been placed successfully.");
+      document.getElementById('paymentForm').submit();
+  }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Confirm Delete</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 80px; }
+    h2 { color: red; }
+    form { display: inline-block; margin-top: 20px; }
+    button { background: red; color: #fff; border: none; padding: 10px 20px; border-radius: 4px; }
+    a { margin-left: 15px; text-decoration: none; color: #2f6df6; }
+  </style>
+</head>
+<body>
+  <h2>Delete "{{ product.name }}"?</h2>
+  <form method="post">
+    {% csrf_token %}
+    <button type="submit">Confirm Delete</button>
+    <a href="{% url 'add_product' %}">Cancel</a>
+  </form>
+</body>
+</html>

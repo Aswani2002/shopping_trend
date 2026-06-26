@@ -1,0 +1,59 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Buy Now | Trendora</title>
+    <link rel="stylesheet" href="{% static 'assets/css/buynow.css' %}">
+</head>
+
+<body>
+
+<header>
+    <div class="logo">TRENDORA</div>
+    <a href="{% url 'index' %}" class="back-btn">Back to Shop</a>
+</header>
+
+<section class="buy-container">
+
+    <!-- LEFT: PRODUCT IMAGE -->
+    <div class="product-image">
+        <img src="{% static 'assets/img/Classic Denim Jacket.jpg' %}" alt="Product Image">
+    </div>
+
+    <!-- RIGHT: PRODUCT DETAILS -->
+    <div class="product-details">
+
+        <h2>Classic Denim Jacket</h2>
+        <p class="category">Men’s Outerwear</p>
+        <p class="price">$89.99</p>
+
+        <p class="description">
+            Upgrade your wardrobe with this stylish denim jacket.
+            Designed for comfort and durability, perfect for casual and semi-formal looks.
+        </p>
+
+        <div class="quantity-section">
+            <label>Quantity:</label>
+            <input type="number" value="1" min="1">
+        </div>
+
+
+        <a href="{% url 'payment' %}" class="btn primary">Buy Now</a>
+        <a href="{% url 'cart' %}" class="btn secondary">Add to Cart</a>
+
+        <div class="delivery-info">
+            <p>🚚 Free delivery on orders above $50.</p>
+            <p>↩ Returns accepted within 7 days.</p>
+        </div>
+    </div>
+
+</section>
+
+<footer>
+    <p>© 2025 Trendora. Crafted with elegance and confidence.</p>
+</footer>
+
+</body>
+</html>

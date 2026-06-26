@@ -1,0 +1,78 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ product.name }} | Trendora</title>
+
+    <link rel="stylesheet" href="{% static 'assets/css/product_details.css' %}">
+</head>
+
+<body>
+
+<header>
+    <h2>TRENDORA</h2>
+    <a href="{% url 'index' %}" class="back-btn">Back to Shop</a>
+</header>
+
+<div class="container">
+
+    <!-- LEFT SIDE -->
+    <div class="product-image">
+        <img src="{{ product.image.url }}" alt="{{ product.name }}">
+    </div>
+
+    <!-- RIGHT SIDE (DETAILS BOX) -->
+    <div class="details-box">
+
+        <h1>{{ product.name }}</h1>
+        <p class="price">₹{{ product.price }}</p>
+        <p>{{ product.description }}</p>
+
+        <h3 class="section-title">Material</h3>
+        <p class="options">100% Premium Denim</p>
+
+        <h3 class="section-title">Quality</h3>
+        <p class="options">Ultra-Soft • Breathable • Durable</p>
+
+        <h3 class="section-title">Available Sizes</h3>
+        <select>
+            <option>Select Size</option>
+            <option>S (Small)</option>
+            <option>M (Medium)</option>
+            <option>L (Large)</option>
+            <option>XL (Extra Large)</option>
+        </select>
+
+        <h3 class="section-title">Available Colors</h3>
+        <select>
+            <option>Classic Blue</option>
+            <option>Dark Wash</option>
+            <option>Light Blue</option>
+        </select>
+
+        <h3 class="section-title">Pattern</h3>
+        <p class="options">Solid Denim • Vintage Wash</p>
+
+        <h3 class="section-title">Quantity</h3>
+        <select>
+            <option>1</option>
+            <option>2</option>
+            <option>3</option>
+        </select>
+
+        <div class="btn-row">
+            <a href="{% url 'payment' product.id %}" class="btn buy-btn">Buy Now</a>
+            <a href="{% url 'cart' %}" class="btn cart-btn">Add to Cart</a>
+        </div>
+
+    </div>
+</div>
+
+<footer>
+    © 2025 Trendora. Crafted with elegance and confidence.
+</footer>
+
+</body>
+</html>
